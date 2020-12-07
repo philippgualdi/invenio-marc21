@@ -17,11 +17,12 @@ readme = open("README.rst").read()
 history = open("CHANGES.rst").read()
 
 tests_require = [
-    "invenio-db>=1.0.0",
-    "invenio-i18n>=1.0.0",
+    "invenio-db>=1.0.6",
+    "invenio-i18n>=1.2.0",
     "invenio-indexer>=1.1.0",
-    "invenio-pidstore>=1.0.0",
-    "invenio-records>=1.0.0",
+    "invenio_search>=1.3.1",
+    "pytest-invenio>=1.4.0",
+    "elasticsearch_dsl>=7.2.1",
     "SQLAlchemy-Continuum>=1.3.11",
 ]
 
@@ -55,7 +56,7 @@ setup_requires = [
 
 install_requires = [
     "Flask>=0.11.1",
-    "Flask-BabelEx>=0.9.3",
+    "Flask-BabelEx>=0.9.4",
     "dojson>=1.3.0",
     "invenio-jsonschemas>=1.0.0",
     "invenio-records>=1.4.0a4,<2.0.0",
@@ -109,6 +110,12 @@ setup(
         ],
         "invenio_config.module": [
             "invenio_marc21 = invenio_marc21.config",
+        ],
+        "invenio_pidstore.fetchers": [
+            "marcid = invenio_marc21.fetchers:marc_pid_fetcher",
+        ],
+        "invenio_pidstore.minters": [
+            "marcid = invenio_marc21.minters:marc_pid_minter",
         ],
     },
     extras_require=extras_require,
