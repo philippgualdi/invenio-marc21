@@ -12,8 +12,8 @@
 .. image:: https://img.shields.io/github/license/inveniosoftware/invenio-marc21.svg
         :target: https://github.com/inveniosoftware/invenio-marc21/blob/master/LICENSE
 
-.. image:: https://img.shields.io/travis/inveniosoftware/invenio-marc21.svg
-        :target: https://travis-ci.org/inveniosoftware/invenio-marc21
+.. image:: https://api.travis-ci.com/tu-graz-library/invenio-marc21.svg
+        :target: https://travis-ci.com/tu-graz-library/invenio-marc21
 
 .. image:: https://img.shields.io/coveralls/inveniosoftware/invenio-marc21.svg
         :target: https://coveralls.io/r/inveniosoftware/invenio-marc21
