@@ -35,7 +35,7 @@ extras_require = {
         "Sphinx>=1.5.2",
     ],
     "elasticsearch7": [
-        "invenio-search[elasticsearch7]>={}".format(invenio_search_version),
+        "invenio-search[elasticsearch7]{}".format(invenio_search_version),
     ],
     "postgresql": [
         "invenio-db[postgresql,versioning]{}".format(invenio_db_version),
