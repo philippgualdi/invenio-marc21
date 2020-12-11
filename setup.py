@@ -57,10 +57,10 @@ setup_requires = [
 ]
 
 install_requires = [
-    "Flask>=0.11.1",
+    "Flask>=1.0.4",
     "Flask-BabelEx>=0.9.4",
     "dojson>=1.3.0",
-    "invenio-jsonschemas>=1.0.0",
+    "invenio-jsonschemas>=3.0.0",
     "invenio-records>=1.4.0a4,<2.0.0",
     "invenio-records-files>=1.2.1,<2.0.0",
     "invenio-records-ui>=1.2.0a1,<2.0.0",
