@@ -20,7 +20,7 @@ tests_require = [
     "invenio-db>=1.0.6",
     "invenio-i18n>=1.2.0",
     "invenio-indexer>=1.1.0",
-    "invenio_search>=1.3.1",
+    "invenio_search>=1.4.0",
     "pytest-invenio>=1.4.0",
     "elasticsearch_dsl>=7.2.1",
     "SQLAlchemy-Continuum>=1.3.11",
@@ -34,7 +34,7 @@ invenio_search_version = ">=1.4.0,<2.0.0"
 
 extras_require = {
     "docs": [
-        "Sphinx>=1.5.2",
+        "Sphinx>=2.4",
     ],
     "elasticsearch7": [
         "invenio-search[elasticsearch7]{}".format(invenio_search_version),
