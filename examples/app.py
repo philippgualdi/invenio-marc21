@@ -2,6 +2,7 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2016-2018 CERN.
+# Copyright (C) 2020 Graz University of Technology.
 #
 # Invenio is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -92,12 +93,12 @@ from invenio_marc21 import InvenioMARC21
 app = Flask(__name__)
 app.config.update(
     APP_BASE_TEMPLATE="app/base.html",
-    SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_DATABASE_URI',
-                                      'sqlite:///app.db'),
+    SQLALCHEMY_DATABASE_URI=os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///app.db"),
 )
 Babel(app)
-if not hasattr(app, 'cli'):
+if not hasattr(app, "cli"):
     from flask_cli import FlaskCLI
+
     FlaskCLI(app)
 InvenioDB(app)
 InvenioI18N(app)
@@ -111,19 +112,20 @@ InvenioMARC21(app)
 # register CSS bundle
 css = NpmBundle(
     # my scss file
-    'app/scss/app.scss',
-    filters='scss, cleancss',
-    output='gen/styles.%(version)s.css',
+    "app/scss/app.scss",
+    filters="scss, cleancss",
+    output="gen/styles.%(version)s.css",
 )
 # register my stylesheets
-assets.env.register('app_css', css)
+assets.env.register("app_css", css)
 
 
-@app.route('/example/<string:index>', methods=['GET'])
+@app.route("/example/<string:index>", methods=["GET"])
 def example(index):
     """Index page."""
     pid = PersistentIdentifier.query.filter_by(id=index).one()
     record = RecordMetadata.query.filter_by(id=pid.object_uuid).first()
 
-    return render_template("app/detail.html", record=record.json, pid=pid,
-                           title="Demosite Invenio Org")
+    return render_template(
+        "app/detail.html", record=record.json, pid=pid, title="Demosite Invenio Org"
+    )

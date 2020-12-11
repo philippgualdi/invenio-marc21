@@ -2,6 +2,7 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2016-2018 CERN.
+# Copyright (C) 2020 Graz University of Technology.
 #
 # Invenio is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -45,8 +46,9 @@ class DoJSONSerializer(PreprocessorMixin):
         :param links_factory: The link factory. (Default: ``None``)
         :returns: The intermediate representation for the record.
         """
-        return self.dump(self.preprocess_record(pid, record,
-                         links_factory=links_factory))
+        return self.dump(
+            self.preprocess_record(pid, record, links_factory=links_factory)
+        )
 
     def transform_search_hit(self, pid, record_hit, links_factory=None):
         """Transform search result hit into an intermediate representation.
@@ -58,5 +60,6 @@ class DoJSONSerializer(PreprocessorMixin):
         :param links_factory: The link factory. (Default: ``None``)
         :returns: The intermediate representation for the record.
         """
-        return self.dump(self.preprocess_search_hit(pid, record_hit,
-                         links_factory=links_factory))
+        return self.dump(
+            self.preprocess_search_hit(pid, record_hit, links_factory=links_factory)
+        )
