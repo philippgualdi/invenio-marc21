@@ -10,7 +10,8 @@
 
 from __future__ import absolute_import, print_function
 
+from .api import Marc21RecordBase
 from .ext import InvenioMARC21
 from .version import __version__
 
-__all__ = ('__version__', 'InvenioMARC21')
+__all__ = ("__version__", "InvenioMARC21", "Marc21RecordBase")
