@@ -13,7 +13,6 @@ import os
 
 from setuptools import find_packages, setup
 
-
 readme = open("README.rst").read()
 history = open("CHANGES.rst").read()
 
@@ -88,6 +87,9 @@ setup(
     platforms="any",
     entry_points={
         "invenio_base.apps": [
+            "invenio_marc21 = invenio_marc21:InvenioMARC21",
+        ],
+        "invenio_base.api_apps": [
             "invenio_marc21 = invenio_marc21:InvenioMARC21",
         ],
         "invenio_i18n.translations": [
