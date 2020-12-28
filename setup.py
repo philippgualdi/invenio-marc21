@@ -99,6 +99,12 @@ setup(
         "invenio_search.mappings": [
             "marc21 = invenio_marc21.mappings",
         ],
+        "invenio_pidstore.fetchers": [
+            "marcid = invenio_marc21.fetchers:marc_pid_fetcher",
+        ],
+        "invenio_pidstore.minters": [
+            "marcid = invenio_marc21.minters:marc_pid_minter",
+        ],
     },
     extras_require=extras_require,
     install_requires=install_requires,
