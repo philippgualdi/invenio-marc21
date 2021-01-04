@@ -12,6 +12,8 @@
 
 from __future__ import absolute_import, print_function
 
+import os
+
 import mock
 import pkg_resources
 import pytest
@@ -54,34 +56,35 @@ def mock_record_validate(self):
 def load_records(es_app, filename, schema):
     """Try to index records."""
     indexer = RecordIndexer()
-    with es_app.test_request_context():
-        data_filename = pkg_resources.resource_filename("invenio_records", filename)
-        records_data = load(data_filename)
-        records = []
-        for item in records_data:
-            item_dict = dict(marc21.do(item))
-            item_dict["$schema"] = schema
-            record = Record.create(item_dict)
-            records.append(record)
-        db.session.commit()
+    # with es_app.test_request_context():
+    # data_filename = pkg_resources.resource_filename("invenio_marc21", filename)
+    data_filename = os.getcwd() + "/" + filename
+    records_data = load(data_filename)
+    records = []
+    for item in records_data:
+        item_dict = dict(marc21.do(item))
+        item_dict["$schema"] = schema
+        record = Record.create(item_dict)
+        records.append(record)
+    db.session.commit()
 
-        es_records = []
-        for record in records:
-            es_records.append(indexer.index(record))
+    es_records = []
+    for record in records:
+        es_records.append(indexer.index(record))
 
-        from invenio_search import current_search
+    from invenio_search import current_search
 
-        for record in es_records:
-            current_search.client.get(
-                index=record["_index"], doc_type=record["_type"], id=record["_id"]
-            )
+    for record in es_records:
+        current_search.client.get(
+            index=record["_index"], doc_type=record["_type"], id=record["_id"]
+        )
 
 
-@pytest.mark.skip(reason="no way of currently testing this")
-def test_authority_data(es_app, request):
+# @pytest.mark.skip(reason="no way of currently testing this")
+def test_authority_data(es, request):
     """Test indexation using authority data."""
-    schema = "http://localhost:5000/" "marc21/authority/ad-v1.0.0.json"
-    load_records(es_app=es_app, filename="data/marc21/authority.xml", schema=schema)
+    schema = "http://localhost/schemas/" "marc21/authority/ad-v1.0.0.json"
+    load_records(es_app=es, filename="data/marc21/authority.xml", schema=schema)
 
 
 @pytest.mark.skip(reason="no way of currently testing this")

@@ -2,7 +2,6 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2016-2018 CERN.
-# Copyright (C) 2020 Graz University of Technology.
 #
 # Invenio is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -27,48 +26,37 @@ from invenio_search import InvenioSearch
 from invenio_marc21 import InvenioMARC21
 
 
-@pytest.fixture()
-def app():
-    """Flask application fixture."""
-    app = Flask("testapp")
-    app.config.update(TESTING=True)
-    return app
+@pytest.fixture(scope="module")
+def celery_config():
+    """Override pytest-invenio fixture."""
+    return {}
 
 
-@pytest.fixture()
-def es_app(request):
-    """Flask application with records fixture."""
-    app = Flask(__name__)
-    app.config.update(
-        JSONSCHEMAS_ENDPOINT="/",
-        JSONSCHEMAS_HOST="http://localhost:5000",
-        SQLALCHEMY_DATABASE_URI=os.environ.get(
-            "SQLALCHEMY_DATABASE_URI", "sqlite:///test.db"
-        ),
-    )
+@pytest.fixture(scope="module")
+def app_config(app_config):
+    """Override pytest-invenio app_config fixture.
+    For test purposes we need to enforce the configuration variables set in
+    config.py. Because invenio-rdm-records is not a flavour extension, it does
+    not enforce them via a config entrypoint or ext.py; only flavour
+    extensions are allowed to forcefully set configuration.
+    This means there is a clash between configuration set by
+    invenio-records-rest and this module for instance. We want this module's
+    config.py to apply in tests.
+    """
+    supported_configurations = [
+        "MARC21_REST_ENDPOINTS",
+    ]
+    from invenio_marc21 import config as _config
 
-    Babel(app)
-    if not hasattr(app, "cli"):
-        from flask_cli import FlaskCLI
+    for config_key in supported_configurations:
+        app_config[config_key] = getattr(_config, config_key, None)
 
-        FlaskCLI(app)
-    InvenioDB(app)
-    InvenioRecords(app)
-    InvenioMARC21(app)
-    search = InvenioSearch(app)
-    InvenioIndexer(app)
-    InvenioJSONSchemas(app)
+    return app_config
 
-    with app.app_context():
-        db.create_all()
-        list(search.create())
-        sleep(10)
 
-    def teardown():
-        with app.app_context():
-            db.drop_all()
-            list(search.delete())
+from invenio_app.factory import create_api
 
-    request.addfinalizer(teardown)
 
-    return app
+@pytest.fixture(scope="module")
+def create_app():
+    return create_api
