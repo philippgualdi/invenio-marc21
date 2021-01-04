@@ -4,7 +4,7 @@
     "index.mapping.total_fields.limit": 3000
   },
   "mappings": {
-  "numeric_detection": true,
+    "numeric_detection": true,
     "properties": {
       "report_number": {
         "type": "object",

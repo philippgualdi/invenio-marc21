@@ -2,6 +2,7 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2016-2018 CERN.
+# Copyright (C) 2020 Graz University of Technology.
 #
 # Invenio is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -29,10 +30,8 @@ from invenio_marc21 import InvenioMARC21
 @pytest.fixture()
 def app():
     """Flask application fixture."""
-    app = Flask('testapp')
-    app.config.update(
-        TESTING=True
-    )
+    app = Flask("testapp")
+    app.config.update(TESTING=True)
     return app
 
 
@@ -41,15 +40,17 @@ def es_app(request):
     """Flask application with records fixture."""
     app = Flask(__name__)
     app.config.update(
-        JSONSCHEMAS_ENDPOINT='/',
-        JSONSCHEMAS_HOST='http://localhost:5000',
+        JSONSCHEMAS_ENDPOINT="/",
+        JSONSCHEMAS_HOST="http://localhost:5000",
         SQLALCHEMY_DATABASE_URI=os.environ.get(
-            'SQLALCHEMY_DATABASE_URI', 'sqlite:///test.db'),
+            "SQLALCHEMY_DATABASE_URI", "sqlite:///test.db"
+        ),
     )
 
     Babel(app)
-    if not hasattr(app, 'cli'):
+    if not hasattr(app, "cli"):
         from flask_cli import FlaskCLI
+
         FlaskCLI(app)
     InvenioDB(app)
     InvenioRecords(app)

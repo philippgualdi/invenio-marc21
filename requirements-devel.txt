@@ -2,11 +2,12 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2016-2018 CERN.
+# Copyright (C) 2020 Graz University of Technology.
 #
 # Invenio is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
--e git+git://github.com/inveniosoftware/dojson.git#egg=dojson
+-e git+git://github.com/tu-graz-library/dojson.git#egg=dojson
 -e git+git://github.com/inveniosoftware/invenio-jsonschemas.git#egg=invenio-jsonschemas
 -e git+git://github.com/inveniosoftware/invenio-records-rest.git#egg=invenio-records-rest
 -e git+git://github.com/inveniosoftware/invenio-records-ui.git#egg=invenio-records-ui
